@@ -3,7 +3,7 @@
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import CompressedImage
-from geometry_msgs.msg import Twist
+from std_msgs.msg import Int64
 import sys
 
 import numpy as np
@@ -15,12 +15,12 @@ class MinimalCoordinatePublisher(Node):
 	def __init__(self):
 		super().__init__('minimal_coordinate_publisher')
 		self.get_logger().info("Ball coordinate publisher has started!!")
-		self.coor_publisher_ = self.create_publisher(Twist, '/turtlebot3/ball_pose', 10)
+		self.coor_publisher_ = self.create_publisher(Int64, '/turtlebot3/ball_pose', 10)
 
 	def send_ball_coordinates(self, x_pose, y_pose):
-		self.msg = Twist()
-		self.msg.linear.x = x_pose
-		self.msg.linear.y = y_pose
+		self.msg = Int64()
+		self.msg = x_pose
+		self.msg = y_pose
 		self.coor_publisher_.publish(self.msg)
 
 		
@@ -121,7 +121,7 @@ def main():
 					txt_mark = "x: " + str(main_circle[0]) + " y: " + str(main_circle[1]) 
 					cv2.putText(main_frame, txt_mark, org=(main_circle[0], main_circle[1]),fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.5 ,color=(102, 255, 51), thickness=2, lineType=cv2.LINE_AA)
 					print("Ball Position: ", main_circle[0], main_circle[1])
-					coor_publisher.send_ball_coordinates(float(main_circle[0]), float(main_circle[1]))
+					coor_publisher.send_ball_coordinates(int(main_circle[0]), int(main_circle[1]))
 					prev_circle = main_circle
 			else:
 				coor_publisher.send_ball_coordinates(10000.0, 10000.0)
