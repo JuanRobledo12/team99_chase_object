@@ -7,17 +7,23 @@ import sys
 
 class BallAngularPosition(Node):
     
+  
+
     def __init__(self):
         super().__init__('ball_anglular_position')
-        self.pose_sub = self.create_subscription(Int64, '/turtlebot3/ball_pose', self.get_ball_coordinates, 10)
+        self.pose_sub = self.create_subscription(Int64, '/lab3/pixel_pos', self.get_ball_coordinates, 10)
         self.get_logger().info("Ball Location Subscriber Started!!")
-        self.angle_pub = self.create_publisher(Int64, '/turtlebot3/ball_angular_pos', 5)
+        self.angle_pub = self.create_publisher(Int64, '/lab3/angular_pos', 5)
     
-    def get_ball_coordinates(self, msg: Int64, cam_angle = 62.2, img_x_pixels = 320):   
-        self.ballpos_x  = msg
+    def get_ball_coordinates(self, msg: Int64):   
+        #self.pub_msg = Int64()
+        print(msg)
+        self.new_msg = Int64()
         #Convert pixel value of ballposx to angle values
-        self.angle_ballpos = (self.ballpos_x * 62.2) / 320
-        self.angle_pub.publish(self.angle_ballpos)        
+        self.new_msg.data = int((msg.data * 62) / 320)
+        print(self.new_msg)
+        #self.angle_pub.publish(self.pub_msg)   
+       
         
 class BallLinearPosition(Node):
 
@@ -40,9 +46,8 @@ class BallLinearPosition(Node):
 def main():
     rclpy.init()
     angular_pos = BallAngularPosition()
-    linear_pos = BallAngularPosition()
+    linear_pos = BallLinearPosition()
     rclpy.spin(angular_pos)
-    rclpy.spin(linear_pos)
     rclpy.shutdown()
   
 if __name__ == '__main__':

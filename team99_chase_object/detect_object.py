@@ -15,12 +15,11 @@ class MinimalCoordinatePublisher(Node):
 	def __init__(self):
 		super().__init__('minimal_coordinate_publisher')
 		self.get_logger().info("Ball coordinate publisher has started!!")
-		self.coor_publisher_ = self.create_publisher(Int64, '/turtlebot3/ball_pose', 10)
+		self.coor_publisher_ = self.create_publisher(Int64, '/lab3/pixel_pos', 10)
 
-	def send_ball_coordinates(self, x_pose, y_pose):
+	def send_ball_coordinates(self, x_pose):
 		self.msg = Int64()
-		self.msg = x_pose
-		self.msg = y_pose
+		self.msg.data = x_pose
 		self.coor_publisher_.publish(self.msg)
 
 		

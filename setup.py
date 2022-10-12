@@ -22,6 +22,7 @@ setup(
         'console_scripts': [
             'detect_object = team99_chase_object.detect_object:main',
             'get_object_range = team99_chase_object.get_object_range:main',
+            'test_angles = team99_chase_object.test_angles:main',
         ],
     },
 )
