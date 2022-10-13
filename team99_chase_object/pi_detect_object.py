@@ -33,18 +33,18 @@ class MinimalVideoSubscriber(Node):
 		self.get_logger().info("Ball detector has been started!!")
 
 		#Set Parameters
-		self.declare_parameter('show_image_bool', True)
-		self.declare_parameter('window_name', "Ball Detector")
+		#self.declare_parameter('show_image_bool', True)
+		#self.declare_parameter('window_name', "Ball Detector")
 
 		#Determine Window Showing Based on Input
-		self._display_image = bool(self.get_parameter('show_image_bool').value)
+		#self._display_image = bool(self.get_parameter('show_image_bool').value)
 
 		#Declare some variables
-		self._titleOriginal = self.get_parameter('window_name').value # Image Window Title	
-		if(self._display_image):
-		#Set Up Image Viewing
-			cv2.namedWindow(self._titleOriginal, cv2.WINDOW_AUTOSIZE ) # Viewing Window
-			cv2.moveWindow(self._titleOriginal, 50, 50) # Viewing Window Original Location
+		# self._titleOriginal = self.get_parameter('window_name').value # Image Window Title	
+		# if(self._display_image):
+		# #Set Up Image Viewing
+		# 	cv2.namedWindow(self._titleOriginal, cv2.WINDOW_AUTOSIZE ) # Viewing Window
+		# 	cv2.moveWindow(self._titleOriginal, 50, 50) # Viewing Window Original Location
 	
 		#Declare that the minimal_video_subscriber node is subcribing to the /camera/image/compressed topic.
 		self._video_subscriber = self.create_subscription(
@@ -57,18 +57,18 @@ class MinimalVideoSubscriber(Node):
 	def _image_callback(self, CompressedImage):	
 		#The "CompressedImage" is transformed to a color image in BGR space and is store in "_imgBGR"
 		self._imgBGR = CvBridge().compressed_imgmsg_to_cv2(CompressedImage, "bgr8")
-		if(self._display_image):
-			#Display the image in a window
-			self.show_image(self._imgBGR)
+		# if(self._display_image):
+		# 	#Display the image in a window
+		# 	self.show_image(self._imgBGR)
 				
 
 	def get_image(self):
 		return self._imgBGR
 
-	def show_image(self, img):
-		cv2.imshow(self._titleOriginal, img)
-		#Cause a slight delay so image is displayed
-		self._user_input=cv2.waitKey(10) #Use OpenCV keystroke grabber for delay.
+	# def show_image(self, img):
+	# 	cv2.imshow(self._titleOriginal, img)
+	# 	#Cause a slight delay so image is displayed
+	# 	self._user_input=cv2.waitKey(10) #Use OpenCV keystroke grabber for delay.
 
 	def process_img(self, img):
 		self.gray_frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -126,10 +126,10 @@ def main():
 				coor_publisher.send_ball_coordinates(10000)
 
 			
-			video_subscriber.show_image(video_subscriber.get_image())		
-			if video_subscriber.get_user_input() == ord('q'):
-				cv2.destroyAllWindows()
-				break
+			# video_subscriber.show_image(video_subscriber.get_image())		
+			# if video_subscriber.get_user_input() == ord('q'):
+			# 	cv2.destroyAllWindows()
+			# 	break
 
 	#Clean up and shutdown.
 	video_subscriber.destroy_node()  

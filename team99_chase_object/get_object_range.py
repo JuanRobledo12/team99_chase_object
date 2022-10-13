@@ -16,13 +16,12 @@ class BallAngularPosition(Node):
         self.angle_pub = self.create_publisher(Int64, '/lab3/angular_pos', 5)
     
     def get_ball_coordinates(self, msg: Int64):   
-        #self.pub_msg = Int64()
-        print(msg)
+        #print(msg)
         self.new_msg = Int64()
         #Convert pixel value of ballposx to angle values
         self.new_msg.data = int((msg.data * 62) / 320)
         print(self.new_msg)
-        #self.angle_pub.publish(self.pub_msg)   
+        self.angle_pub.publish(self.new_msg)   
        
         
 class BallLinearPosition(Node):
