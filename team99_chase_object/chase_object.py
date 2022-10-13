@@ -17,18 +17,21 @@ class BallFollower(Node):
         self.vel_msg = Twist()
         #self.get_logger().info(str(msg.linear.x))
         ballpos_x = msg.data
-        if (ballpos_x >= center-5) and (ballpos_x <= center+5):
+        if (ballpos_x >= center-2) and (ballpos_x <= center+2):
             self.get_logger().info('the ball is already in the center')
             self.vel_msg.angular.z = 0.0
+            self.vel_msg.linear.x = 2.0 #LINEAR MOVEMENT
             self.vel_publisher.publish(self.vel_msg) 
-        elif (ballpos_x < center-5) or ((ballpos_x > center+5) and (ballpos_x <= 62)):
+        elif (ballpos_x < center-2) or ((ballpos_x > center+2) and (ballpos_x <= 62)):
             speed = speed_gain * -(ballpos_x-center) / center
             self.get_logger().info('rotating...')
             self.vel_msg.angular.z = speed
+            self.vel_msg.linear.x = 2.0  #LINEAR MOVEMENT
             self.vel_publisher.publish(self.vel_msg)
-        elif (ballpos_x >= 10000.0):
+        elif (ballpos_x >= 1000):
             self.get_logger().info("I'm lost, please help me!")
             self.vel_msg.angular.z = 0.0
+            self.vel_msg.linear.x = 0.0 #LINEAR MOVEMENT
             self.vel_publisher.publish(self.vel_msg)
         
 

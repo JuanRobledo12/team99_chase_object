@@ -81,7 +81,7 @@ class MinimalVideoSubscriber(Node):
 		return self.circle_ls
 
 	def get_user_input(self):
-		return self._user_input
+	 	return self._user_input
 
 
 def main():
