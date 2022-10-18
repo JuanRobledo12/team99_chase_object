@@ -25,6 +25,7 @@ setup(
             'test_angles = team99_chase_object.test_angles:main',
             'chase_object = team99_chase_object.chase_object:main',
             'pi_detect_object = team99_chase_object.pi_detect_object:main',
+            'detect_ball_v2 = team99_chase_object.detect_ball_v2:main',
         ],
     },
 )
